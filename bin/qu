@@ -1,0 +1,19 @@
+#! /usr/bin/env ruby
+
+help = File.expand_path(File.join("..", "README"), File.dirname(__FILE__))
+
+if ARGV.empty?
+  exec "${PAGER:-less} #{help}"
+end
+
+require "clap"
+
+trap(:INT) { puts; exit 1 }
+
+Clap.run ARGV,
+  "-h" => lambda {
+    exec "${PAGER:-less} #{help}"
+  },
+  "start" => lambda {
+    exec "bandicoot start -p 12345 -d data/volume -c data/qu.b -s data/volume/qu"
+  }
