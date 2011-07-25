@@ -45,8 +45,7 @@ class Bandicoot
       rel = new
 
       header.map do |field|
-        name, type = field.split(":")
-        name
+        field.split(":").first
       end.zip(values).each do |field, value|
         rel.send(:"#{field}=", transform(value, @@fields[field.to_sym]))
       end
